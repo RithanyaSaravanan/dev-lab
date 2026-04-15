@@ -2,7 +2,7 @@
 import streamlit as st
 import datetime
 
-st.title("🚀 My Jenkins CD Streamlit App")
+st.title("🚀 My Jenkins CD Streamlit App updated")
 
 st.write("If this updates after Git push, your pipeline works 😌")
 
