@@ -1,0 +1,40 @@
+sudo apt update
+sudo apt install ansible -y
+ansible --version
+ip a
+ssh-keygen -t rsa
+ssh-copy-id user@10.10.17.4
+nano inventory.ini
+[webservers]
+10.10.17.4
+ansible all -i inventory.ini -m ping
+
+ansible-galaxy init my_web_role
+nano my_web_role/tasks/main.yml
+
+---
+- name: Install Apache
+  apt:
+    name: apache2
+    state: present
+    update_cache: yes
+
+- name: Ensure Apache is running
+  service:
+    name: apache2
+    state: started
+    enabled: yes
+
+nano site.yml
+
+---
+- name: Configure web server
+  hosts: webservers
+  become: true
+
+  roles:
+    - my_web_role
+
+ansible-playbook -i inventory.ini site.yml -K
+
+http://10.10.17.4
